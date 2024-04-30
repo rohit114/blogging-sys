@@ -27,7 +27,7 @@ export class BlogPostMySqlRepo extends MySqlBaseRepo implements IBlogPostRepo {
         return BlogPostImpl.buildFromRow(data[0] as BlogPostFormat)
     }
 
-    async readAllPostId(page: number, limit: number, authorId?: string, creationDate?: string): Promise<IBlogPost[] | [] | null> {
+    async readAllPosts(page: number, limit: number, authorId?: string, creationDate?: string): Promise<IBlogPost[] | [] | null> {
         let query: string[] = [];
         let whereClauseValues: any[] = [];
         const offset = (page - 1) * limit;

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, ParseIntPipe, Post, Query, Req, Res } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, ParseIntPipe, Post, Query, Req, Res } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { BaseController } from './BaseController';
 import { Request, Response } from 'express';
@@ -15,18 +15,32 @@ export class PostController extends BaseController {
         @Body() payload: Object,
         @Res() res: Response,
     ) {
-        logger.info('CONTROLLER:CREATE::POST::INIT', {});
-        const dto = plainToInstance(CreatePostDto, payload, {
-            enableImplicitConversion: true,
-        });
 
-        let response = await BlogPostService.create(dto);
-        logger.info('CONTROLLER:CREATE::POST::DONE', {});
-        return res
-            .status(HttpStatus.CREATED)
-            .json(
-                this.buildSuccessResponse(response),
-            );
+        try {
+            logger.info('CONTROLLER:CREATE::POST::INIT', {});
+            const dto = plainToInstance(CreatePostDto, payload, {
+                enableImplicitConversion: true,
+            });
+
+            let response = await BlogPostService.create(dto);
+            logger.info('CONTROLLER:CREATE::POST::DONE', {});
+            return res
+                .status(HttpStatus.CREATED)
+                .json(
+                    this.buildSuccessResponse(response),
+                );
+
+        } catch (error) {
+            if (error instanceof BadRequestException) {
+                return res.status(HttpStatus.BAD_REQUEST).json({
+                    status: false,
+                    message: error.message,
+                    data: null,
+                });
+            } else {
+                throw error; //other errors
+            }
+        }
     }
 
     //update post by postId
@@ -73,7 +87,8 @@ export class PostController extends BaseController {
     ) {
         try {
             logger.info('CONTROLLER::POST::DETAIL::INIT', postId);
-            let response =  await BlogPostService.getByPostId(postId);
+            let response = await BlogPostService.getByPostId(postId);
+
             if (!response) {
                 throw new NotFoundException(`Post with postId: ${postId} not found`);
             }

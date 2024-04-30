@@ -1,4 +1,5 @@
-import { ILoggingUtil, getLoggingUtil } from "src/utils/logging.util";
+import { ILoggingUtil, getLoggingUtil } from "../utils";
+
 
 
 export abstract class BaseManager {

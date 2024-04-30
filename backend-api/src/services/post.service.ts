@@ -1,8 +1,9 @@
-import { IBlogPost, IUser } from '@core/backend-model';
-import { CreatePostDto, FilterPostDto, UpdatePostDto } from 'src/dto/requests/PostDto';
-import repoManager from 'src/managers/repo.manager';
-import { IdGeneratorUtil } from 'src/utils/idGenerator';
-import { getLoggingUtil } from 'src/utils/logging.util';
+import { IBlogPost } from '@core/backend-model';
+import { CreatePostDto, FilterPostDto, UpdatePostDto } from '../dto/requests/PostDto';
+import repoManager from '../managers/repo.manager';
+import { IdGeneratorUtil } from '../utils';
+import { getLoggingUtil } from '../utils';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 const moment = require('moment-timezone');
 
 const logger = getLoggingUtil('BlogPostService');
@@ -12,7 +13,6 @@ export class BlogPostService {
     try {
       logger.info('CREATE::POST::INIT', request);
       const post = this.buildPost(request);
-      logger.info('----> post', post);
       let id = await repoManager.blogPostRepo.createPost(post);
      
       let createdPost = await repoManager.blogPostRepo.readById(id);
@@ -20,19 +20,18 @@ export class BlogPostService {
       return createdPost;
     } catch (err) {
       console.error("create post Err", err.message)
+      throw new BadRequestException('post creation failed')
     }
   }
 
-   //getAllPosts with filter and paginanation
   static async getByPostId(postId: string): Promise<IBlogPost | null> {
-    try {
-      logger.info('GET::POST_DETAIL::INIT::POST_ID', postId);
+    logger.info('GET::POST_DETAIL::INIT::POST_ID', postId);
       let postDetail = await repoManager.blogPostRepo.readByPostId(postId);
       logger.info('GET::POST_DETAIL::DONE::POST_ID', postDetail);
+      if(!postDetail){
+        throw new NotFoundException(`Post with postId: ${postId} not found`);
+      }
       return postDetail;
-    } catch (err) {
-      console.error("getByPostId Err", err.message)
-    }
   }
  
   static async getAllPosts(request: FilterPostDto): Promise<IBlogPost[]| [] | null> {
@@ -40,12 +39,12 @@ export class BlogPostService {
       logger.info('GET::ALL::POSTS::INIT', request);
       const authorId = (request.authorId)?request.authorId:null;
       const creationDt = (request.creation_dt)?request.creation_dt:null;
-      const formattedDate = moment(creationDt).tz('Asia/Kolkata').format('YYYY-MM-DD');
+      const formattedDate = (creationDt)?moment(creationDt).tz('Asia/Kolkata').format('YYYY-MM-DD'):null;
       const page = (request.page)?request.page:1;
       const limit = (request.limit)?request.limit:5;
       logger.info('creationDt', creationDt);
       logger.info('formattedDate', formattedDate);
-      let posts = await repoManager.blogPostRepo.readAllPostId(page, limit, authorId, formattedDate);
+      let posts = await repoManager.blogPostRepo.readAllPosts(page, limit, authorId, formattedDate);
       logger.info('GET::ALL::POSTS::DONE', posts);
       return posts;
     } catch (err) {

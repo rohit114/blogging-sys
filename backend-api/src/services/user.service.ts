@@ -1,9 +1,9 @@
 import { IUser } from '@core/backend-model';
-import { UserDto } from 'src/dto/requests/UserDto';
-import repoManager from 'src/managers/repo.manager';
-import { IdGeneratorUtil } from 'src/utils/idGenerator';
-import { getLoggingUtil } from 'src/utils/logging.util';
-import { NotFoundException, ForbiddenException } from '@nestjs/common';
+import { UserDto } from '../dto/requests/UserDto';
+import repoManager from '../managers/repo.manager';
+import { IdGeneratorUtil } from '../utils/idGenerator';
+import { getLoggingUtil } from '../utils/logging.util';
+import { NotFoundException, BadRequestException } from '@nestjs/common';
 
 const logger = getLoggingUtil('UserService');
 
@@ -18,6 +18,7 @@ export class UserService {
       return createdUser;
     } catch (err) {
       console.error("createUser Err", err.message)
+      throw new BadRequestException('User creation failed')
     }
   }
 
