@@ -43,10 +43,7 @@ export class MySqlBaseRepo {
     ): Promise<number> {
         try {
             let query = this.buildInsertOneQuery(table, insertColVals);
-            console.log("------> query", query)
-            console.log("------> insertColVals", insertColVals)
             let values = insertColVals.map((it) => it.value);
-            console.log("------> insert values", values)
             let poolOrCon = dbTransaction?.connection || this.pool;
             let [result] = await this.executeQuery(poolOrCon, query, values);
             let insertResult: ResultSetHeader = result as ResultSetHeader;
@@ -82,7 +79,6 @@ export class MySqlBaseRepo {
     ): Promise<any> {
         try {
             let poolOrCon = dbTransaction?.connection || this.pool;
-            console.log("-----> updateValues.concat(whereValues)", updateValues.concat(whereValues))
             let values = updateValues.concat(whereValues);
             const ack = await this.executeQuery(
                 poolOrCon,

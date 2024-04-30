@@ -1,6 +1,7 @@
 import { instanceToPlain } from 'class-transformer';
-import { SuccessResponseDto } from 'src/dto/responses/SuccessResponseDto';
-import { ILoggingUtil } from 'src/utils/logging.util';
+import { SuccessResponseDto } from '../dto/responses/SuccessResponseDto';
+import { ILoggingUtil } from '../utils';
+
 
 
 export abstract class BaseController {

@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpStatus, NotFoundException, Param, Post, Req, Res } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { UserDto } from 'src/dto/requests/UserDto';
-import { UserService } from 'src/services/user.service';
+import { UserDto } from '../dto/requests/UserDto';
+import { UserService } from '../services/user.service';
 import { BaseController } from './BaseController';
 import { Request, Response } from 'express';
 
