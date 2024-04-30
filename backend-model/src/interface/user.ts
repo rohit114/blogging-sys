@@ -6,6 +6,7 @@ export interface IUser {
     email: string;
     isActive:boolean;
     isBlocked:boolean;
+    accessToken:string;
     createdAt:Date;
     updatedAt:Date;
 }

@@ -14,8 +14,10 @@ let mockUser: IUser = {
     email: 'john@example.com',
     isActive: true,
     isBlocked: false,
+    accessToken: null,
     createdAt: new Date(),
     updatedAt: new Date(),
+   
 };
 
 const userRequest: UserDto = {
@@ -153,6 +155,19 @@ describe('BlogPostService', () => {
             expect(result).toBeDefined();
             expect(result.length).toEqual(2)
         });
+    });
 
+    describe('deleteByPostId', () => {
+        it('delete a post', async () => {
+            postFilterDto.page = 1;
+            postFilterDto.limit = 2;
+            const result = await BlogPostService.deleteByPostId(mockPostId);
+            expect(result).toBeDefined();
+            expect(result[0]['affectedRows']).toEqual(1);
+        });
+        it('should throw NotFoundException if post not found', async () => {
+            const postId = mockPostId;
+            await expect(BlogPostService.getByPostId(postId)).rejects.toThrowError(NotFoundException);
+        });
     });
 });

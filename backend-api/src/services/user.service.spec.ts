@@ -11,6 +11,7 @@ const mockUser: IUser = {
   email: 'john@example.com',
   isActive: true,
   isBlocked: false,
+  accessToken: null,
   createdAt: new Date(),
   updatedAt: new Date(),
 };

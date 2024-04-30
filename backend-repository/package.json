@@ -11,9 +11,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "typescript": "^5.4.2",
     "@core/backend-model": "file:../backend-model",
     "mongodb": "^6.1.0",
-    "mysql2": "^3.5.1"
+    "mysql2": "^3.5.1",
+    "typescript": "^5.4.2"
   }
 }
