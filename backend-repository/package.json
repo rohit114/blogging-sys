@@ -1,0 +1,19 @@
+{
+  "name": "@core/backend-repository",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.4.2",
+    "@core/backend-model": "file:../backend-model",
+    "mongodb": "^6.1.0",
+    "mysql2": "^3.5.1"
+  }
+}
