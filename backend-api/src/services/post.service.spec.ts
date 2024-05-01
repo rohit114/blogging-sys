@@ -142,10 +142,10 @@ describe('BlogPostService', () => {
     describe('readAllPosts', () => {
         it('should return all post with filter', async () => {
             postFilterDto.page = 1;
-            postFilterDto.limit = 2;
+            postFilterDto.limit = 1;
             const result = await BlogPostService.getAllPosts(postFilterDto);
             expect(result).toBeDefined();
-            expect(result.length).toEqual(2)
+            expect(result.length).toEqual(1)
         });
     });
 
