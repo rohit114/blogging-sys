@@ -56,10 +56,10 @@
     * URL: `{{BASE_URL}}/apis/blogging-sys/v1/post/detail/:post_id`
     * api will return the post of requested post_id
 
-5. create a blogging post:
+5. update a blogging post:
     * METHOD: `POST`
     * HEADER: `Authorization` with `Bearer {my-access-token}`
-    * URL: `{{BASE_URL}}/apis/blogging-sys/v1/post/create`
+    * URL: `{{BASE_URL}}/apis/blogging-sys/v1/post/update`
     * BODY: `{"title":"updated title","content":"updated content","user_id":"USR0A44F38E38C","post_id":"PO5FF6A854705"}`
     * api will return the updated post
 
