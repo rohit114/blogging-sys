@@ -1,15 +1,19 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, ParseIntPipe, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, Headers, Post, Query, Res, UseGuards, ForbiddenException } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { BaseController } from './BaseController';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { CreatePostDto, FilterPostDto, UpdatePostDto } from 'src/dto/requests/PostDto';
 import { BlogPostService } from 'src/services/post.service';
 import { getLoggingUtil } from 'src/utils/logging.util';
 import { AuthGuard } from 'src/services/AuthGuard';
+import { JwtService } from '@nestjs/jwt';
 const logger = getLoggingUtil('BlogPostService');
 
 @Controller('/v1/post')
 export class PostController extends BaseController {
+    constructor(private readonly jwtService: JwtService) {
+        super();
+    }
     //create post
     @UseGuards(AuthGuard)
     @Post('create')
@@ -71,16 +75,40 @@ export class PostController extends BaseController {
     @Delete('delete/:postId')
     async delete(
         @Param('postId') postId: string,
+        @Headers() headers: Record<string, string>,
         @Res() res: Response,
     ) {
-        logger.info('CONTROLLER:DELETE::POST::INIT', postId);
-        let response = await BlogPostService.deleteByPostId(postId);
-        logger.info('CONTROLLER:DELETE::POST::DONE', postId);
-        return res
-            .status(HttpStatus.OK)
-            .json(
-                this.buildSuccessResponse(response),
-            );
+        try {
+            let verifiedUser = this.validateToken(headers.authorization);
+            logger.info('CONTROLLER:DELETE::POST::INIT', postId);
+            let response = await BlogPostService.deleteByPostId(postId, verifiedUser);
+            logger.info('CONTROLLER:DELETE::POST::DONE', postId);
+            return res
+                .status(HttpStatus.OK)
+                .json(
+                    this.buildSuccessResponse(response),
+                );
+
+        } catch (error) {
+            if (error instanceof ForbiddenException) {
+                return res.status(HttpStatus.FORBIDDEN).json({
+                    status: false,
+                    message: error.message,
+                    data: null,
+                });
+            } else {
+                throw error; 
+            }
+        }
+    }
+
+    private validateToken(auth: string) {
+        const token = auth.split(' ')[1];
+        try {
+            return this.jwtService.verify(token);
+        } catch (e) {
+            throw new Error("Err validateToken");
+        }
     }
 
     //get post by postId

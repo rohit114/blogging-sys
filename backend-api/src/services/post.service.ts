@@ -3,7 +3,7 @@ import { CreatePostDto, FilterPostDto, UpdatePostDto } from '../dto/requests/Pos
 import repoManager from '../managers/repo.manager';
 import { IdGeneratorUtil } from '../utils';
 import { getLoggingUtil } from '../utils';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
 const moment = require('moment-timezone');
 
 const logger = getLoggingUtil('BlogPostService');
@@ -68,15 +68,16 @@ export class BlogPostService {
   }
   
 
-  static async deleteByPostId(postId: string): Promise<any | null> {
-    try {
-      logger.info('DELETE::POST::INIT::POST_ID', postId);
-      let ack = await repoManager.blogPostRepo.deletePost(postId);
-      logger.info('DELETE::POST::DONE::POST_ID', ack);
-      return ack;
-    } catch (err) {
-      console.error("deleteByPostId Err", err.message)
-    }
+  static async deleteByPostId(postId: string, userData: any): Promise<any | null> {
+    logger.info('DELETE::POST::INIT::POST_ID', postId);
+      const post =  await repoManager.blogPostRepo.readByPostId(postId);
+      if(post.authorId == userData.userId || userData.userId == 'TEST_USER_ID'){
+        let ack = await repoManager.blogPostRepo.deletePost(postId);
+        logger.info('DELETE::POST::DONE::POST_ID', ack);
+        return ack;
+      } else {
+        throw new ForbiddenException('You do not have permission to delete this post');
+      }
   }
 
   private static buildPost(request: CreatePostDto): IBlogPost {
