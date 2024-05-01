@@ -33,7 +33,7 @@
     3. `npm start`  - NestJs will start listening to `PORT 3001` , you can change the port from `src/main.ts`
 
 ### To run tests:
-    1. change directory to backend-api `cd backend-api`
+    1. change directory to backend-api: `cd backend-api`
     2. npm run test
 
 ### API Documentation:
@@ -100,4 +100,4 @@
 * You can find the all curl of the apis in the postman collection `apis.postman_collection.json` inside the blogging-sys repo
 
 ### Contact
-* mail me at rohitkumardas114@gmail.com for support or reporting any issues
+* email me at rohitkumardas114@gmail.com for support or reporting any issues
