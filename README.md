@@ -10,6 +10,9 @@
 
 * The API returns standard HTTP status codes to indicate the success or failure of requests. Error responses include detailed messages to assist developers in troubleshooting issues.
 
+## Flow Diagram
+    https://drive.google.com/file/d/1uvk2FIlxfmqtAABtZqBfqJe8vkjq3sG0/view?usp=sharing
+
 ### Tech stck used:
 * NodeJs V16.0.0+
 * TypeScript V5.4.5+
