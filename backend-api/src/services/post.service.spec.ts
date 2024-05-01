@@ -153,13 +153,12 @@ describe('BlogPostService', () => {
         it('delete a post', async () => {
             postFilterDto.page = 1;
             postFilterDto.limit = 2;
-            const result = await BlogPostService.deleteByPostId(mockPostId);
+            const result = await BlogPostService.deleteByPostId(mockPostId, {userId : 'TEST_USER_ID'});
             expect(result).toBeDefined();
             expect(result[0]['affectedRows']).toEqual(1);
         });
         it('should throw NotFoundException if post not found', async () => {
-            const postId = mockPostId;
-            await expect(BlogPostService.getByPostId(postId)).rejects.toThrowError(NotFoundException);
+            await expect(BlogPostService.getByPostId("xxxxxx")).rejects.toThrowError(NotFoundException);
         });
     });
 });

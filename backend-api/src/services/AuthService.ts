@@ -9,12 +9,13 @@ export class AuthService {
 
     public async login(loginDto: UserLogInDto) {
         try {
-            const payload = { email: loginDto.email, mobile: loginDto.mobile };
+            let payload = { email: loginDto.email, mobile: loginDto.mobile };
             let user = await repoManager.userRepo.findByEmailOrMobile(loginDto.email, loginDto.mobile);
             if (!user) {
                 throw new NotFoundException(`User with email: ${loginDto.email} mobile: ${loginDto.mobile} not found`);
             }
-            const accessToken = this.jwtService.sign(payload, { expiresIn: '24h' });
+            const userId = {userId: user.userId};
+            const accessToken = this.jwtService.sign({...payload, ...userId}, { expiresIn: '24h' });
             await repoManager.userRepo.saveAccessToken(user.userId, accessToken);  // Save the access token to the user table
             return {
                 access_token: accessToken,
