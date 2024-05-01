@@ -13,3 +13,11 @@ export class UserDto {
   @Expose({ name: 'mobile' })
   mobile: string;
 }
+
+export class UserLogInDto {
+  @Expose({ name: 'email' })
+  email?: string;
+
+  @Expose({ name: 'mobile' })
+  mobile?: string;
+}

@@ -1,14 +1,17 @@
 import { IUser } from '@core/backend-model';
-import { UserDto } from '../dto/requests/UserDto';
+import { UserDto, UserLogInDto } from '../dto/requests/UserDto';
 import repoManager from '../managers/repo.manager';
 import { IdGeneratorUtil } from '../utils/idGenerator';
 import { getLoggingUtil } from '../utils/logging.util';
 import { NotFoundException, BadRequestException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { AuthService } from './AuthService';
 
 const logger = getLoggingUtil('UserService');
-
+const jwtService: JwtService = new JwtService();
 export class UserService {
-  static async createUser(request: UserDto):Promise<IUser | null> {
+
+  static async createUser(request: UserDto): Promise<IUser | null> {
     try {
       logger.info('CREATE::USER::INIT', request); //Mask PII data in log
       const user = this.buildUser(request);
@@ -22,27 +25,29 @@ export class UserService {
     }
   }
 
-  static async getByUserId(userId: string):Promise<IUser | null> {
+
+  static async getByUserId(userId: string): Promise<IUser | null> {
     logger.info('GET::USER_DETAIL::INIT::USER_ID', userId);
-      let userDetail = await repoManager.userRepo.readByUserId(userId);
-      if(!userDetail){
-        throw new NotFoundException(`User with userId: ${userId} not found`);
-      }
-      logger.info('GET::USER_DETAIL::DONE', userDetail); //Mask PII data in log
-      return userDetail;
+    let userDetail = await repoManager.userRepo.readByUserId(userId);
+    if (!userDetail) {
+      throw new NotFoundException(`User with userId: ${userId} not found`);
+    }
+    logger.info('GET::USER_DETAIL::DONE', userDetail); //Mask PII data in log
+    return userDetail;
   }
 
-  private static buildUser(request: UserDto):IUser {
+  private static buildUser(request: UserDto): IUser {
     return {
-        userId: IdGeneratorUtil.userId(),
-        firstName: request.firstName,
-        lastName: request.lastName,
-        mobile: request.mobile,
-        email: request.email,
-        isActive: true,
-        isBlocked: false,
-        createdAt: new Date(),
-        updatedAt: new Date()
+      userId: IdGeneratorUtil.userId(),
+      firstName: request.firstName,
+      lastName: request.lastName,
+      mobile: request.mobile,
+      email: request.email,
+      isActive: true,
+      isBlocked: false,
+      accessToken: null,
+      createdAt: new Date(),
+      updatedAt: new Date()
     }
 
   }

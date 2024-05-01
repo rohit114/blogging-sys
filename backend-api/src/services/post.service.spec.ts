@@ -4,7 +4,7 @@ import { CreatePostDto, FilterPostDto, UpdatePostDto } from 'src/dto/requests/Po
 import { UserService } from './user.service';
 import { UserDto } from 'src/dto/requests/UserDto';
 import { NotFoundException } from '@nestjs/common';
-
+import { RandomGenerator } from '../utils';
 
 let mockUser: IUser = {
     userId: '1',
@@ -14,8 +14,10 @@ let mockUser: IUser = {
     email: 'john@example.com',
     isActive: true,
     isBlocked: false,
+    accessToken: null,
     createdAt: new Date(),
     updatedAt: new Date(),
+
 };
 
 const userRequest: UserDto = {
@@ -76,10 +78,8 @@ describe('BlogPostService', () => {
 
     describe('createPost', () => {
         it('should create a new post', async () => {
-
-            mockRepoManager.userRepo.createOne.mockResolvedValue('1');
-            mockRepoManager.userRepo.readById.mockResolvedValue(mockUser);
-
+            userRequest.email = RandomGenerator.generateRandomEmail(8);
+            userRequest.mobile = RandomGenerator.generateRandomNumber(10);
             const result = await UserService.createUser(userRequest);
             mockUserId = result.userId;
             const resultKeys = Object.keys(result);
@@ -98,9 +98,6 @@ describe('BlogPostService', () => {
 
 
         it('should create a new post', async () => {
-
-            mockRepoManager.postRepo.createPost.mockResolvedValue('1');
-            mockRepoManager.postRepo.readById.mockResolvedValue(mockPost);
             request.userId = mockUserId;
             const result = await BlogPostService.create(request);
             mockAuthorId = result.authorId;
@@ -122,21 +119,18 @@ describe('BlogPostService', () => {
 
     describe('readByPostId', () => {
         it('should return post details', async () => {
-            jest.spyOn(mockRepoManager.postRepo, 'readByPostId').mockResolvedValue(mockPost);
             const result = await BlogPostService.getByPostId(mockPostId);
             expect(result).toBeDefined();
         });
 
         it('should throw NotFoundException if post not found', async () => {
             const mockPostId = '0';
-            mockRepoManager.postRepo.readByPostId.mockResolvedValue(null);
             await expect(BlogPostService.getByPostId(mockPostId)).rejects.toThrowError(NotFoundException);
         });
     });
 
     describe('updateByPostId', () => {
         it('should return updated post', async () => {
-            jest.spyOn(mockRepoManager.postRepo, 'updatePost').mockResolvedValue(mockPost);
             updatePostDto.postId = mockPostId;
             updatePostDto.userId = mockUserId;
             const result = await BlogPostService.update(updatePostDto);
@@ -153,6 +147,19 @@ describe('BlogPostService', () => {
             expect(result).toBeDefined();
             expect(result.length).toEqual(2)
         });
+    });
 
+    describe('deleteByPostId', () => {
+        it('delete a post', async () => {
+            postFilterDto.page = 1;
+            postFilterDto.limit = 2;
+            const result = await BlogPostService.deleteByPostId(mockPostId);
+            expect(result).toBeDefined();
+            expect(result[0]['affectedRows']).toEqual(1);
+        });
+        it('should throw NotFoundException if post not found', async () => {
+            const postId = mockPostId;
+            await expect(BlogPostService.getByPostId(postId)).rejects.toThrowError(NotFoundException);
+        });
     });
 });

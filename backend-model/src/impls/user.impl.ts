@@ -9,6 +9,7 @@ export class UserImpl implements IUser {
     email: string;
     isActive: boolean;
     isBlocked: boolean;
+    accessToken: string;
     createdAt: Date;
     updatedAt: Date;
 
@@ -42,6 +43,7 @@ export class UserImpl implements IUser {
             mobile: user.mobile,
             is_active: user.isActive,
             is_blocked: user.isBlocked,
+            access_token: user.accessToken,
             created_at: user.createdAt,
             updated_at: user.updatedAt
         };
@@ -56,6 +58,7 @@ export class UserImpl implements IUser {
             mobile: user.mobile,
             isActive: user.is_active,
             isBlocked: user.is_blocked,
+            accessToken: user.access_token,
             createdAt: user.created_at,
             updatedAt: user.updated_at
         };

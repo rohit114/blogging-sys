@@ -1,15 +1,17 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, ParseIntPipe, Post, Query, Req, Res } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, NotFoundException, Param, ParseIntPipe, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { BaseController } from './BaseController';
 import { Request, Response } from 'express';
 import { CreatePostDto, FilterPostDto, UpdatePostDto } from 'src/dto/requests/PostDto';
 import { BlogPostService } from 'src/services/post.service';
 import { getLoggingUtil } from 'src/utils/logging.util';
+import { AuthGuard } from 'src/services/AuthGuard';
 const logger = getLoggingUtil('BlogPostService');
 
 @Controller('/v1/post')
 export class PostController extends BaseController {
     //create post
+    @UseGuards(AuthGuard)
     @Post('create')
     async create(
         @Body() payload: Object,
@@ -44,6 +46,7 @@ export class PostController extends BaseController {
     }
 
     //update post by postId
+    @UseGuards(AuthGuard)
     @Post('update')
     async update(
         @Body() payload: Object,
@@ -64,6 +67,7 @@ export class PostController extends BaseController {
     }
 
     //delete post by postId
+    @UseGuards(AuthGuard)
     @Delete('delete/:postId')
     async delete(
         @Param('postId') postId: string,
@@ -80,6 +84,7 @@ export class PostController extends BaseController {
     }
 
     //get post by postId
+    @UseGuards(AuthGuard)
     @Get('detail/:postId')
     async getPost(
         @Param('postId') postId: string,
@@ -113,6 +118,7 @@ export class PostController extends BaseController {
     };
 
     //getAllPosts with filter and paginanation
+    @UseGuards(AuthGuard)
     @Get('all')
     async getAllPosts(
         @Query('author_id') author_id: string,

@@ -6,6 +6,7 @@ export class UserFormat {
     email: string;
     is_active:boolean;
     is_blocked: boolean;
+    access_token:string;
     created_at: Date;
     updated_at: Date;
 }
