@@ -1,0 +1,280 @@
+{
+	"info": {
+		"_postman_id": "ae3a54b4-be44-4a73-8a58-3463a61cf88a",
+		"name": "blogging-sys-collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "4345306"
+	},
+	"item": [
+		{
+			"name": "localhost:3001/apis/blogging-sys/health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:3001/apis/blogging-sys/health"
+			},
+			"response": []
+		},
+		{
+			"name": "create-user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\":\"Rohit\",\n    \"last_name\": \"Kumar\",\n    \"mobile\": 987654321,\n    \"email\": \"rohitkumardas114@abc.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3001/apis/blogging-sys/v1/user/create"
+			},
+			"response": []
+		},
+		{
+			"name": "get-user-details-by-userId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvaGl0a3VtYXJkYXMxMTRAZ21haWwuY29tIiwibW9iaWxlIjoiOTY3MjQyMTg5OSIsImlhdCI6MTcxNDUxNzcxNCwiZXhwIjoxNzE0NjA0MTE0fQ.iDt9cteq6cNVTkSQdlHGyxnI-SgDLm_GO4togjAZheU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3001/apis/blogging-sys/v1/user/details/USR0A44F38E38C"
+			},
+			"response": []
+		},
+		{
+			"name": "delete-by-post-id",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvaGl0a3VtYXJkYXMxMTRAZ21haWwuY29tIiwibW9iaWxlIjoiOTY3MjQyMTg5OSIsImlhdCI6MTcxNDUxNjA3NSwiZXhwIjoxNzE0NTE5Njc1fQ.W_c-iHCyN_W-0qIdIH8oqbqcHHNqIpdDOFr5zMjjWSY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3001/apis/blogging-sys/v1/post/delete/PO5FF6A854705",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"apis",
+						"blogging-sys",
+						"v1",
+						"post",
+						"delete",
+						"PO5FF6A854705"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-by-post-id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvaGl0a3VtYXJkYXMxMTRAZ21haWwuY29tIiwibW9iaWxlIjoiOTY3MjQyMTg5OSIsImlhdCI6MTcxNDU5OTg0MSwiZXhwIjoxNzE0Njg2MjQxfQ.NDmU8ArE-bGtH0OqD6z3qOILrT1OSh_zY7Tc7A2-SBE",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3001/apis/blogging-sys/v1/post/detail/PO5F167A78F5A"
+			},
+			"response": []
+		},
+		{
+			"name": "create-post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvaGl0a3VtYXJkYXMxMTRAZ21haWwuY29tIiwibW9iaWxlIjoiOTY3MjQyMTg5OSIsImlhdCI6MTcxNDUxNzcxNCwiZXhwIjoxNzE0NjA0MTE0fQ.iDt9cteq6cNVTkSQdlHGyxnI-SgDLm_GO4togjAZheU",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My Blog title34\",\n    \"content\": \"This is my content4\",\n    \"user_id\": \"USR0A44F38E38C\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3001/apis/blogging-sys/v1/post/create"
+			},
+			"response": []
+		},
+		{
+			"name": "update-post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvaGl0a3VtYXJkYXMxMTRAZ21haWwuY29tIiwibW9iaWxlIjoiOTY3MjQyMTg5OSIsImlhdCI6MTcxNDUxNjA3NSwiZXhwIjoxNzE0NTE5Njc1fQ.W_c-iHCyN_W-0qIdIH8oqbqcHHNqIpdDOFr5zMjjWSY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"xxxxxxxx2\",\n    \"content\": \"yyyyyyyy2\",\n    \"user_id\": \"PO5FF6A854705\",\n    \"post_id\": \"PO5FF6A854705\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3001/apis/blogging-sys/v1/post/update"
+			},
+			"response": []
+		},
+		{
+			"name": "get-all-posts-with-filter-and-pagination",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvaGl0a3VtYXJkYXMxMTRAZ21haWwuY29tIiwibW9iaWxlIjoiOTY3MjQyMTg5OSIsImlhdCI6MTcxNDU5MjI5OCwiZXhwIjoxNzE0Njc4Njk4fQ.GYmhPuO7h8PxwJGhwmTCG0RlNGLk08Wa5ZsUR_k-DQM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3001/apis/blogging-sys/v1/post/all?page=1&limit=4&author_id=USR0A44F38E38C&creation_dt=2024-04-30T08:28:38.000Z",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"apis",
+						"blogging-sys",
+						"v1",
+						"post",
+						"all"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "4"
+						},
+						{
+							"key": "author_id",
+							"value": "USR0A44F38E38C"
+						},
+						{
+							"key": "creation_dt",
+							"value": "2024-04-30T08:28:38.000Z"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"rohitkumardas114@gmail.com\",\n    \"mobile\": \"9876543210\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3001/apis/blogging-sys/v1/user/auth/login"
+			},
+			"response": []
+		},
+		{
+			"name": "bloc-unblok-user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvaGl0a3VtYXJkYXMxMTRAZ21haWwuY29tIiwibW9iaWxlIjoiOTY3MjQyMTg5OSIsImlhdCI6MTcxNDU5MjI5OCwiZXhwIjoxNzE0Njc4Njk4fQ.GYmhPuO7h8PxwJGhwmTCG0RlNGLk08Wa5ZsUR_k-DQM",
+						"type": "text"
+					},
+					{
+						"key": "role",
+						"value": "ADMIN",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\": \"USRD9339E787F0\",\n    \"mark_block\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:3001/apis/blogging-sys/v1/user/block"
+			},
+			"response": []
+		}
+	]
+}

@@ -91,7 +91,7 @@
     * URL: `{{BASE_URL}}/apis/blogging-sys/v1/user/block`
 
 
-* You can find the all curl of the apis in the postman collection `blogging-sys-collection` inside the blogging-sys repo
+* You can find the all curl of the apis in the postman collection `apis.postman_collection.json` inside the blogging-sys repo
 
 ### Contact
 * mail me at rohitkumardas114@gmail.com for support or reporting any issues
