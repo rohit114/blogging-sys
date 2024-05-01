@@ -1,11 +1,10 @@
 import { IUser } from '@core/backend-model';
-import { UserDto, UserLogInDto } from '../dto/requests/UserDto';
+import { UserBlockDto, UserDto, UserLogInDto } from '../dto/requests/UserDto';
 import repoManager from '../managers/repo.manager';
 import { IdGeneratorUtil } from '../utils/idGenerator';
 import { getLoggingUtil } from '../utils/logging.util';
 import { NotFoundException, BadRequestException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AuthService } from './AuthService';
 
 const logger = getLoggingUtil('UserService');
 const jwtService: JwtService = new JwtService();
@@ -34,6 +33,17 @@ export class UserService {
     }
     logger.info('GET::USER_DETAIL::DONE', userDetail); //Mask PII data in log
     return userDetail;
+  }
+
+  static async blockUnblockUser(request: UserBlockDto){
+    logger.info('BLOCK::USER::INIT::USER_ID', request);
+    if(request.markBlock == true){
+      await repoManager.userRepo.markBlocked(request.userId);
+    } else if(request.markBlock == false){
+      repoManager.userRepo.markUnblocked(request.userId);
+    }
+    logger.info('BLOCK::USER::DONE::USER_ID', request);
+    return true;
   }
 
   private static buildUser(request: UserDto): IUser {

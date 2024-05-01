@@ -21,3 +21,11 @@ export class UserLogInDto {
   @Expose({ name: 'mobile' })
   mobile?: string;
 }
+
+export class UserBlockDto {
+  @Expose({ name: 'user_id' })
+  userId: string;
+
+  @Expose({ name: 'mark_block' })
+  markBlock: boolean;
+}
