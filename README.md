@@ -10,19 +10,20 @@
 
 * The API returns standard HTTP status codes to indicate the success or failure of requests. Error responses include detailed messages to assist developers in troubleshooting issues.
 
-### Tech stck used
+### Tech stck used:
 * NodeJs V16.0.0+
 * TypeScript V5.4.5+
 * NestJs V10.3.2+
 * MySQL V8.1.0+
 
-### Setting up project
+### Setting up project:
 * Clone this repo `https://github.com/rohit114/blogging-sys.git`
     * Change directory to `cd blogging-sys`
         1. `cd backend-model && npm  i && npm run build` - build models
         2. `cd backend-repository && npm i && npm run build` - build repository 
         3. `cd backend-api && npm i && npm run build` - backend-api
-* To run the application
+
+### To run the application:
     1. change directory to backend-api `cd backend-api`
     2. run the migration file  `blogging-sys-migration.sql` in mysql to create the required db, tables and indexes
     3. rename `sample.env` to `.env`
@@ -30,7 +31,11 @@
         MYSQL_DATABASE, JWT_SECRET_KEY accoding to your sysytem
     4. `npm start`  - NestJs will start listening to `PORT 3001` , you can change the port from `src/main.ts`
 
-### API doc
+### To run tests:
+    1. change directory to backend-api `cd backend-api`
+    2. npm run test
+
+### API Documentation:
 1. create a user:
     * METHOD: `POST`
     * URL: `{{BASE_URL}}/apis/blogging-sys/v1/user/create`
