@@ -1,3 +1,7 @@
+CREATE DATABASE blogging-sys;
+
+USE blogging-sys;
+
 CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(50),
