@@ -5,6 +5,7 @@ import { IUser, UserImpl } from '@core/backend-model';
 import { UserFormat } from '@core/backend-model/src/impls/formats';
 
 export class UserMysqlRepo extends MySqlBaseRepo implements IUserRepo {
+
     async saveAccessToken(userId:string, accessToken: string): Promise<any> {
         let query: string[] = [];
         let colVals: string[] = [];
@@ -75,16 +76,31 @@ export class UserMysqlRepo extends MySqlBaseRepo implements IUserRepo {
         return colVals;
     }
 
-    markInActive(userId: string): Promise<any> {
+    async markBlocked(userId: string): Promise<any> {
+        let query: string[] = [];
+        let colVals: string[] = [];
+        query.push(`UPDATE ${TableName.USERS}`)
+        query.push(`SET is_blocked = 1`)
+        query.push(`WHERE user_id = ?;`);
+        const ack = await this.updateByQueyAndValue(query.join(' '), colVals, [userId]);
+        return ack;
+    }
+    async markUnblocked(userId: string): Promise<any> {
+        let query: string[] = [];
+        let colVals: string[] = [];
+        query.push(`UPDATE ${TableName.USERS}`)
+        query.push(`SET is_blocked = 0`)
+        query.push(`WHERE user_id = ?;`);
+        const ack = await this.updateByQueyAndValue(query.join(' '), colVals, [userId]);
+        return ack;
+    }
+
+    async markInActive(userId: string): Promise<any> {
         throw new Error('Method not implemented.');
     }
-    markBlocked(userId: string): Promise<any> {
+
+    async markActive(userId: string): Promise<any> {
         throw new Error('Method not implemented.');
     }
-    markActive(userId: string): Promise<any> {
-        throw new Error('Method not implemented.');
-    }
-    markUnblocked(userId: string): Promise<any> {
-        throw new Error('Method not implemented.');
-    }
+
 }

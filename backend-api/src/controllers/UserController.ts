@@ -1,10 +1,11 @@
-import { BadRequestException, Body, Controller, Get, HttpStatus, NotFoundException, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, NotFoundException, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { UserDto, UserLogInDto } from '../dto/requests/UserDto';
+import { UserBlockDto, UserDto, UserLogInDto } from '../dto/requests/UserDto';
 import { UserService } from '../services/user.service';
 import { BaseController } from './BaseController';
 import { Request, Response } from 'express';
 import { AuthGuard } from 'src/services/AuthGuard';
+import { AdminGuard } from 'src/services/AdminGuard';
 
 @Controller('/v1/user')
 export class UserController extends BaseController {
@@ -57,4 +58,23 @@ export class UserController extends BaseController {
       }
     }
   };
+
+  @UseGuards(AuthGuard)
+  @UseGuards(AdminGuard)
+  @Post('block')
+  async BlockUnblockUser(
+    @Req() req: Request,
+    @Body() payload: Object,
+    @Res() res: Response,
+  ) {
+    const dto = plainToInstance(UserBlockDto, payload, {
+      enableImplicitConversion: true,
+    });
+    let response = await UserService.blockUnblockUser(dto);
+    return res
+      .status(HttpStatus.OK)
+      .json(
+        this.buildSuccessResponse(response),
+      );
+  }
 }

@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { IUser } from '@core/backend-model';
 import { UserLogInDto } from 'src/dto/requests/UserDto';
 import repoManager from 'src/managers/repo.manager';
 
