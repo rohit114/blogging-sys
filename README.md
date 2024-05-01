@@ -11,7 +11,7 @@
 * The API returns standard HTTP status codes to indicate the success or failure of requests. Error responses include detailed messages to assist developers in troubleshooting issues.
 
 ## Flow Diagram
-    https://drive.google.com/file/d/1uvk2FIlxfmqtAABtZqBfqJe8vkjq3sG0/view?usp=sharing
+    https://drive.google.com/file/d/1odP56piZ6Ver2XCBpK93Jkj7Eil6DC7c/view?usp=sharing
 
 ### Tech stck used:
 * NodeJs V16.0.0+
@@ -27,12 +27,10 @@
         3. `cd backend-api && npm i && npm run build` - backend-api
 
 ### To run the application:
-    1. change directory to backend-api `cd backend-api`
-    2. run the migration file  `blogging-sys-migration.sql` in mysql to create the required db, tables and indexes
-    3. rename `sample.env` to `.env`
-        * this env file has all the required environment variables but you can change the MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORD,
-        MYSQL_DATABASE, JWT_SECRET_KEY accoding to your sysytem
-    4. `npm start`  - NestJs will start listening to `PORT 3001` , you can change the port from `src/main.ts`
+* change directory to backend-api `cd backend-api`
+    1. run the migration file  `blogging-sys-migration.sql` in mysql to create the required db, tables and indexes
+    2. rename `sample.env` to `.env`this env file has all the required environment variables but you can change the MYSQL_HOST     MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORD,MYSQL_DATABASE, JWT_SECRET_KEY accoding to your sysytem
+    3. `npm start`  - NestJs will start listening to `PORT 3001` , you can change the port from `src/main.ts`
 
 ### To run tests:
     1. change directory to backend-api `cd backend-api`
