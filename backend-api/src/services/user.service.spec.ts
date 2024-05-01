@@ -2,8 +2,9 @@ import { UserDto } from 'src/dto/requests/UserDto';
 import { UserService } from './user.service';
 import { IUser } from '@core/backend-model';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { RandomGenerator } from '../utils';
 
-const mockUser: IUser = {
+let mockUser: IUser = {
   userId: '1',
   firstName: 'John',
   lastName: 'Doe',
@@ -16,7 +17,7 @@ const mockUser: IUser = {
   updatedAt: new Date(),
 };
 
-const request: UserDto = {
+let request: UserDto = {
   firstName: 'John',
   lastName: 'Doe',
   mobile: '1234567890',
@@ -36,10 +37,8 @@ describe('UserService', () => {
 
   describe('createUser', () => {
     it('should create a new user', async () => {
-
-      mockRepoManager.userRepo.createOne.mockResolvedValue('1');
-      mockRepoManager.userRepo.readById.mockResolvedValue(mockUser);
-
+      request.email = RandomGenerator.generateRandomEmail(8);
+      request.mobile = RandomGenerator.generateRandomNumber(10);
       const result = await UserService.createUser(request);
       mockUserId = result.userId;
       const resultKeys = Object.keys(result);
@@ -55,14 +54,6 @@ describe('UserService', () => {
       const extraKeys = resultKeys.filter((key) => !mockUserKeys.includes(key));
       expect(extraKeys).toEqual([]);
     });
-
-    // it('should throw an error if user creation fails', async () => {
-    //   const mockedRejectedPromise = Promise.reject(new Error('Something went wrong'));
-    //   mockRepoManager.userRepo.createOne.mockRejectedValue(mockedRejectedPromise);
-    //   mockRepoManager.userRepo.readById.mockRejectedValue(mockedRejectedPromise);
-    //   const result = await UserService.createUser(request);
-    //   await expect(UserService.createUser(request)).rejects.toThrowError(BadRequestException);
-    // });
   });
 
   describe('getByUserId', () => {

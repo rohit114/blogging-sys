@@ -5,21 +5,21 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService) { }
 
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    try{
-        const request = context.switchToHttp().getRequest();
-        if (!request.headers.authorization) {
-          return false;
-        }
-        request.user = this.validateToken(request.headers.authorization);
-        return true;
+    try {
+      const request = context.switchToHttp().getRequest();
+      if (!request.headers.authorization) {
+        return false;
+      }
+      request.user = this.validateToken(request.headers.authorization);
+      return true;
 
-    } catch(error){
-        throw new Error("Err canActivate")
+    } catch (error) {
+      console.error("Err canActivate", error.message)
     }
   }
 
@@ -28,8 +28,7 @@ export class AuthGuard implements CanActivate {
     try {
       return this.jwtService.verify(token);
     } catch (e) {
-      throw new Error("Err validateToken")
-    //   return null;
+      throw new Error("Err validateToken");
     }
   }
 }
