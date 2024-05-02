@@ -1,16 +1,16 @@
-CREATE DATABASE blogging-sys;
+CREATE DATABASE blogging_sys;
 
-USE blogging-sys;
+USE blogging_sys;
 
 CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(50),
-    first_name VARCHAR(50),
-    last_name VARCHAR(50),
-    mobile VARCHAR(15),
-    email VARCHAR(100),
-    is_active BOOLEAN,
-    is_blocked BOOLEAN,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    mobile VARCHAR(15) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    is_active BOOLEAN DEFAULT 1,
+    is_blocked BOOLEAN DEFAULT 0,
     access_token VARCHAR(255) DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
