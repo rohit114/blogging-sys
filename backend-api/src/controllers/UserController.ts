@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, NotFoundException, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, HttpException, HttpStatus, NotFoundException, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { UserBlockDto, UserDto, UserLogInDto } from '../dto/requests/UserDto';
 import { UserService } from '../services/user.service';
@@ -6,6 +6,7 @@ import { BaseController } from './BaseController';
 import { Request, Response } from 'express';
 import { AuthGuard } from 'src/services/AuthGuard';
 import { AdminGuard } from 'src/services/AdminGuard';
+import { ValidationError, validateOrReject } from 'class-validator';
 
 @Controller('/v1/user')
 export class UserController extends BaseController {
@@ -16,17 +17,33 @@ export class UserController extends BaseController {
     @Body() payload: Object,
     @Res() res: Response,
   ) {
-    const dto = plainToInstance(UserDto, payload, {
-      enableImplicitConversion: true,
-    });
 
-    let response = await UserService.createUser(dto);
+    try {
+      const dto = plainToInstance(UserDto, payload, {
+        enableImplicitConversion: true,
+      });
+      await validateOrReject(dto);
+      let response = await UserService.createUser(dto);
 
-    return res
-      .status(HttpStatus.CREATED)
-      .json(
-        this.buildSuccessResponse(response),
-      );
+      return res
+        .status(HttpStatus.CREATED)
+        .json(
+          this.buildSuccessResponse(response),
+        );
+
+    } catch (errors) {
+
+      if (errors instanceof Array && errors.every(err => err instanceof ValidationError)) {
+        return res.status(HttpStatus.BAD_REQUEST).json({
+          status: false,
+          message: 'Validation failed',
+          errors: errors.map(err => err.constraints),
+          data: null,
+        });
+      } else {
+        throw new Error(errors?.message);
+      }
+    }
   }
 
   //get post details by userId
