@@ -94,7 +94,7 @@
     * METHOD: `GET`
     * HEADER: `Authorization` with `Bearer {my-access-token}`
     * URL: `{{BASE_URL}}/apis/blogging-sys/v1/user/details/:user_id`
-    * api will return a post of `user_id`
+    * api will return user details of `user_id`
 
 10. block a user
     * only admin role user can block users
