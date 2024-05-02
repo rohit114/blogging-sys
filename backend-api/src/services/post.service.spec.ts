@@ -11,7 +11,7 @@ let mockUser: IUser = {
     firstName: 'Rohit',
     lastName: 'Kumar',
     mobile: '1234567890',
-    email: 'Rohit@example.com',
+    email: 'rohitkumardas114@gmail.com',
     isActive: true,
     isBlocked: false,
     accessToken: null,
@@ -24,7 +24,7 @@ const userRequest: UserDto = {
     firstName: 'Rohit',
     lastName: 'Kumar',
     mobile: '1234567890',
-    email: 'Rohit@example.com',
+    email: 'rohitkumardas114@gmail.com',
 };
 let mockUserId = '1';
 let mockPost: IBlogPost = {
