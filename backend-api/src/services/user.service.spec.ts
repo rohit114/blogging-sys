@@ -6,7 +6,7 @@ import { RandomGenerator } from '../utils';
 
 let mockUser: IUser = {
   userId: '1',
-  firstName: 'John',
+  firstName: 'Rohit',
   lastName: 'Kumar',
   mobile: '1234567890',
   email: 'rohitkumardas114@gmail.com',
@@ -18,7 +18,7 @@ let mockUser: IUser = {
 };
 
 let request: UserDto = {
-  firstName: 'John',
+  firstName: 'Rohit',
   lastName: 'Kumar',
   mobile: '1234567890',
   email: 'rohitkumardas114@gmail.com',
