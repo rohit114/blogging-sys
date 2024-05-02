@@ -90,7 +90,13 @@
     * URL: `{{BASE_URL}}/apis/blogging-sys/v1/post/delete/:post_id`
     * api return success on deletion of given post_id
 
-9. block a user
+9. get user detail by `user_id` :
+    * METHOD: `GET`
+    * HEADER: `Authorization` with `Bearer {my-access-token}`
+    * URL: `{{BASE_URL}}/apis/blogging-sys/v1/user/details/:user_id`
+    * api will return a post of `user_id`
+
+10. block a user
     * only admin role user can block users
     * METHOD: `POST`
     * HEADER: `role` with "ADMIN" `Authorization` with `Bearer {my-access-token}`

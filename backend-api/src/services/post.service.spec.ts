@@ -8,10 +8,10 @@ import { RandomGenerator } from '../utils';
 
 let mockUser: IUser = {
     userId: '1',
-    firstName: 'John',
-    lastName: 'Doe',
+    firstName: 'Rohit',
+    lastName: 'Kumar',
     mobile: '1234567890',
-    email: 'john@example.com',
+    email: 'Rohit@example.com',
     isActive: true,
     isBlocked: false,
     accessToken: null,
@@ -21,10 +21,10 @@ let mockUser: IUser = {
 };
 
 const userRequest: UserDto = {
-    firstName: 'John',
-    lastName: 'Doe',
+    firstName: 'Rohit',
+    lastName: 'Kumar',
     mobile: '1234567890',
-    email: 'john@example.com',
+    email: 'Rohit@example.com',
 };
 let mockUserId = '1';
 let mockPost: IBlogPost = {

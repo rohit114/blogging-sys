@@ -9,7 +9,7 @@ let mockUser: IUser = {
   firstName: 'John',
   lastName: 'Doe',
   mobile: '1234567890',
-  email: 'john@example.com',
+  email: 'rohitkumardas114@gmail.com',
   isActive: true,
   isBlocked: false,
   accessToken: null,
@@ -21,7 +21,7 @@ let request: UserDto = {
   firstName: 'John',
   lastName: 'Doe',
   mobile: '1234567890',
-  email: 'john@example.com',
+  email: 'rohitkumardas114@gmail.com',
 };
 let mockUserId = '1';
 describe('UserService', () => {
